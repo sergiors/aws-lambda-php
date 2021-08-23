@@ -1,0 +1,24 @@
+service: app
+
+provider:
+    name: aws
+    region: sa-east-1
+    runtime: provided.al2
+    lambdaHashingVersion: 20201221
+
+plugins:
+    - ./vendor/bref/bref
+
+functions:
+    hello:
+        handler: index.php
+        description: ''
+        events:
+            - httpApi: '*'
+        layers:
+            - ${bref:layer.php-73}
+
+# Exclude files from deployment
+package:
+    patterns:
+        - '!tests/**'
